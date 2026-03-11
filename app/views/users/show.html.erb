@@ -1,0 +1,14 @@
+
+<%provide(:title,@user.name) %>
+
+
+<div class="row justify-content-center">
+  <aside class="text-start ">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for(@user) %>
+        <%=@user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
