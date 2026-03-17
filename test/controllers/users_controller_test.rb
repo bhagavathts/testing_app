@@ -48,5 +48,14 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, params: { id: @user }
     end
     assert_redirected_to root_url
+    end
+  test "should redirect following when not logged in" do
+    get :following, params: { id: @user }
+    assert_redirected_to login_url
   end
+
+    test "should redirect followers when not logged in" do
+      get :followers, params: { id: @user }
+      assert_redirected_to login_url
+    end
 end

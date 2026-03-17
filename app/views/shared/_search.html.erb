@@ -1,0 +1,10 @@
+<%= form_for( :search,url: users_path, method: :get, local: true) do |f| %>
+  <div class="input-group mb-3">
+
+    <%= f.text_field :user_search, class: "form-control", placeholder: "Search users..."%>
+    <button class="btn btn-outline-secondary" type="submit" style="background-color: #CCCCCC; color: #222222">
+      Search
+    </button>
+
+  </div>
+<% end %>

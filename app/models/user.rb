@@ -50,7 +50,13 @@ class User < ApplicationRecord
     reset_sent_at < 10.minutes.ago
   end
   def feed
-    Micropost.where("user_id = ?", id)
+    following_ids_subselect="SELECT followed_id FROM relationships WHERE follower_id=:user_id"
+    Micropost.where("user_id IN (#{following_ids_subselect}) OR user_id =:user_id ", following_ids: following_ids, user_id: id)
+  end
+  def search(user_search)
+    if user_search.any?
+      where("name LIKE ? OR email LIKE ?","%#{user_search}%","%#{user_search}%")
+    end
   end
   def follow(other_user)
     following << other_user
