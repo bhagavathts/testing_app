@@ -61,6 +61,7 @@ class User < ApplicationRecord
     end
   end
   def follow(other_user)
+
     following << other_user
   end
   def unfollow(other_user)
