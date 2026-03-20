@@ -53,9 +53,11 @@ class User < ApplicationRecord
     following_ids_subselect="SELECT followed_id FROM relationships WHERE follower_id=:user_id"
     Micropost.where("user_id IN (#{following_ids_subselect}) OR user_id =:user_id ", following_ids: following_ids, user_id: id)
   end
-  def search(user_search)
-    if user_search.any?
+  def self.search(user_search)
+    if user_search.present?
       where("name LIKE ? OR email LIKE ?","%#{user_search}%","%#{user_search}%")
+    else
+      all
     end
   end
   def follow(other_user)

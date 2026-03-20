@@ -2,9 +2,13 @@ class UsersController < ApplicationController
   before_action :logged_in_user,only:[:index,:edit,:update,:destroy,:following,:followers]
   before_action :correct_user, only:[:edit,:update]
   before_action :admin_user,only: :destroy
+  def suggestions
+    users = User.where("LOWER(name) LIKE ?", "%#{params[:term].downcase}%").limit(5)
+    render json: users.pluck(:name)
+  end
   def index
 
-    @users=User.paginate(page: params[:page])
+    @users = User.search(params[:user_search]).paginate(page: params[:page])
   end
   def new
     @user = User.new
